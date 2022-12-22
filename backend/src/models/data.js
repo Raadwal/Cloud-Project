@@ -69,6 +69,8 @@ const addAuthorsData = async () => {
 
         await authorModel.create(newAuthor);
     }
+
+    return "Authors Data Added";
 };
 
 const addBooksData = async () => {
@@ -96,6 +98,8 @@ const addBooksData = async () => {
 
         await bookModel.create(newBook);
     }
+
+    return "Books Data Added";
 };
 
 const addTagsData = async () => {
@@ -109,6 +113,8 @@ const addTagsData = async () => {
 
         await tagModel.create(newTag);
     }
+
+    return "Tags Data Added";
 };
 
 const addUsersData = async () => {
@@ -129,12 +135,17 @@ const addUsersData = async () => {
 
         await userModel.create(newUser);
     }
+
+    return "Users Data Added";
 };
 
-const createRatings = async () => {
+const addBooksReviews = async () => {
     const users = await userModel.findAll();
     const books = await bookModel.findAll();
     let booksIdxs = [];
+
+    const usersIds = [];
+    const reviewsData = [];
     
     for (let i = 0; i < users.length; i++) {
         const userId = users[i]._id;
@@ -152,15 +163,22 @@ const createRatings = async () => {
                     score: score
                 }
 
+                usersIds.push(userId);
+                reviewsData.push(book);
+
                 await userModel.rateBook(userId, book);
             }
         }
 
         booksIdxs = [];
     }
+
+    await userModel.createMultipleReviews(usersIds, reviewsData);
+
+    return "Ratings Data Added";
 };
 
-const addAuthors = async () => {
+const addBooksAuthors = async () => {
     const authors = await authorModel.findAll();
     const books = await bookModel.findAll();
 
@@ -172,9 +190,11 @@ const addAuthors = async () => {
 
         await authorModel.addBook(authorId, bookId)
     }
+
+    return "Books Authors Data Added";
 };
 
-const addTags = async () => {
+const addBooksTags = async () => {
     const books = await bookModel.findAll();
     const tags = await tagModel.findAll();
     let tagsIdxs = [];
@@ -197,18 +217,8 @@ const addTags = async () => {
 
         tagsIdxs = [];
     }
-};
 
-const addData = async () => {
-    await addAuthorsData()
-    await addBooksData()
-    await addTagsData()
-    await addUsersData()
-    await createRatings()
-    await addAuthors()
-    await addTags()
-
-    return "Data added";
+    return "Books Tags Data Added"
 };
 
 const deleteData = async () => {
@@ -228,6 +238,12 @@ const deleteData = async () => {
 }
 
 export default {
-    addData,
+    addAuthorsData,
+    addBooksData,
+    addTagsData,
+    addUsersData,
+    addBooksAuthors,
+    addBooksTags,
+    addBooksReviews,
     deleteData
 }

@@ -78,6 +78,31 @@ const rateBook = async (userId, rating) => {
     return resultData;
 };
 
+const createMultipleReviews = async(usersIds, ratings) => {
+    const session = startSession();
+    const resultsData = [];
+
+    for (let i = 0; i < usersIds.length; i++) {
+        const userId = usersIds[i];
+        const rating = ratings[i];
+
+        const result = await session.run(`MATCH (u:User), (b:Book)
+                                      WHERE u._id = '${userId}' AND b._id = '${rating.bookId}'
+                                      CREATE (u)-[:RATED {score: '${rating.score}'}]->(b)
+                                      return u, b
+         `);
+
+        const resultData = {
+            user: result.records.map(i=>i.get('u').properties),
+            book: result.records.map(i=>i.get('b').properties)
+        }
+
+        resultsData.push(resultData);
+    }
+
+    return resultsData;
+}
+
 const getRatedBooksAboveValue = async (id, value) => {
     const session = startSession()
     const result = await session.run(`MATCH (u:User)-[r:RATED]->(b)
@@ -128,7 +153,7 @@ const findRecommendations = async (id) => {
     const result = await session.run(`MATCH (u:User {_id:'${id}'})-[r:RATED]->(b:Book)
                                     WITH b, toInteger(r.score) AS score
                                     ORDER BY score DESC
-                                    LIMIT 1
+                                    LIMIT 3
                                     WITH DISTINCT b
                                     MATCH (b)-[tt:TAGGED]->(t:Tag)
                                     WITH DISTINCT t
@@ -168,5 +193,6 @@ export default {
     findRecommendations,
     getReviews,
     deleteReview,
-    getRatedBooksAboveValue
+    getRatedBooksAboveValue,
+    createMultipleReviews
 }
