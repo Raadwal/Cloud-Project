@@ -1,0 +1,76 @@
+.title {
+    display: flex;
+
+    padding: 10px;
+
+    font-weight: bold;
+    font-size: clamp(0.75rem, 1.25vmax, 1.25rem);
+
+    text-align: center;
+}
+
+.dataWrapper {
+  border-top: solid 3px #0c0c0c;
+  border-bottom: solid 3px #0c0c0c;
+
+  box-shadow: 0 0 5px #000000;
+}
+
+.element {    
+    display: flex;
+
+    padding-top: 2px;
+    padding-bottom: 2px;
+
+    text-align: center;
+
+    background-color: lightgray;
+
+    font-size: clamp(0.5rem, 1vmax, 1rem);
+}
+
+.element:nth-child(odd) {
+  background-color: white;
+}
+
+.element:hover {
+  background-color: grey;
+}
+
+.wId {
+  width: 7.5%;
+}
+
+.w5 {
+  width: 5%;
+}
+
+.w10 {
+  width: 10%;
+}
+
+.w15 {
+  width: 15%;
+}
+
+.w20 {
+  width: 20%;
+}
+
+.w25 {
+  width: 25%;
+}
+
+.w33 {
+  width: 33%;
+}
+
+button {
+  width: 50%;
+  height: 100%;
+
+  font-size: clamp(0.5rem, 1vmax, 1rem);
+
+  background-color: transparent;
+  border: solid #0c0c0c 1px;
+}

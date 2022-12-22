@@ -33,13 +33,23 @@ user.post('/:idUser/rate', async (req, res) => {
     res.json(result);
 });
 
+user.get('/:id/reviews', async (req, res) => {
+    const result = await userModel.getReviews(req.params.id);
+    res.json(result);
+});
+
+user.delete('/:idUser/review/:idBook', async (req, res) => {
+    const result = await userModel.deleteReview(req.params.idUser, req.params.idBook);
+    res.json(result);
+});
+
 user.get('/:id/rated/:value', async (req, res) => {
     const result = await userModel.getRatedBooksAboveValue(req.params.id, req.params.value);
     res.json(result);
 });
 
 user.get('/:id/recommendation', async (req, res) => {
-    const result = await userModel.rateBook(req.params.id);
+    const result = await userModel.findRecommendations(req.params.id);
     res.json(result);
 });
 

@@ -38,4 +38,9 @@ author.get('/:id/books', async (req, res) => {
     res.json(result);
 });
 
+author.delete('/:idAuthor/book/:idBook', async (req, res) => {
+    const result = await authorModel.deleteBook(req.params.idAuthor, req.params.idBook);
+    res.json(result);
+});
+
 export default author;

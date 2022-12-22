@@ -1,4 +1,5 @@
 import express from 'express';
+import cors from 'cors';
 import author from './src/routes/author';
 import book from './src/routes/book';
 import tag from './src/routes/tag';
@@ -10,6 +11,7 @@ require('dotenv').config();
 const app = express();
 
 app.use(express.json());
+app.use(cors());
 app.use(express.urlencoded({
     extended:true
 }));

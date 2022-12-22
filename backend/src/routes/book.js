@@ -38,4 +38,9 @@ book.get('/:id/tags', async (req, res) => {
     res.json(result);
 });
 
+book.delete('/:idBook/tag/:idTag', async (req, res) => {
+    const result = await bookModel.deleteTag(req.params.idBook, req.params.idTag);
+    res.json(result);
+});
+
 export default book;
