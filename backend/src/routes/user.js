@@ -48,7 +48,7 @@ user.get('/:id/rated/:value', async (req, res) => {
     res.json(result);
 });
 
-user.get('/:id/recommendation', async (req, res) => {
+user.get('/:id/recommendations', async (req, res) => {
     const result = await userModel.findRecommendations(req.params.id);
     res.json(result);
 });

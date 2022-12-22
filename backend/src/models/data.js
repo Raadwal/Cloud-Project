@@ -1,4 +1,6 @@
 import * as nanoid from 'nanoid';
+const neo4j = require('neo4j-driver');
+
 import authorModel from './author';
 import bookModel from './book';
 import tagModel from './tag';
@@ -198,15 +200,34 @@ const addTags = async () => {
 };
 
 const addData = async () => {
-    //await addAuthorsData()
-    //await addBooksData()
-    //await addTagsData()
-    //await addUsersData()
-    //await createRatings()
+    await addAuthorsData()
+    await addBooksData()
+    await addTagsData()
+    await addUsersData()
+    await createRatings()
     await addAuthors()
-    //await addTags()
+    await addTags()
+
+    return "Data added";
 };
 
+const deleteData = async () => {
+    const {
+        NEO4J_URI,
+        NEO4J_USERNAME,
+        NEO4J_PASSWORD,
+    } = process.env;
+
+    const driver = neo4j.driver(NEO4J_URI, neo4j.auth.basic(NEO4J_USERNAME, NEO4J_PASSWORD));
+    const session = driver.session();
+
+    await session.run(`MATCH (n) -[r] -> () DELETE n, r`);
+    await session.run('MATCH (n) DELETE n');
+
+    return "Data deleted";
+}
+
 export default {
-    addData
+    addData,
+    deleteData
 }

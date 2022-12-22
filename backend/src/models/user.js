@@ -125,23 +125,25 @@ const deleteReview = async (idUser, idBook) => {
 
 const findRecommendations = async (id) => {
     const session = startSession()
-    const result = await session.run(`MATCH (u:User)-[r:RATED]->(b:Book)
-                                        WHERE u._id = '${id}'
-                                        WITH b, toInteger(r.score) AS score
-                                        ORDER BY score DESC
-                                        LIMIT 3
-                                        MATCH (b)-[:TAGGED]->(t:Tag)
-                                        WITH DISTINCT t
-                                        MATCH (u:User)-[r:RATED]->(b:Book)-[:TAGGED]->(t)
-                                        WITH b, t, AVG(toInteger(r.score)) AS avgScore, COUNT(u) AS rateCount
-                                        ORDER BY avgScore DESC
-                                        RETURN b, avgScore, rateCount
-                                        LIMIT 10
+    const result = await session.run(`MATCH (u:User {_id:'${id}'})-[r:RATED]->(b:Book)
+                                    WITH b, toInteger(r.score) AS score
+                                    ORDER BY score DESC
+                                    LIMIT 1
+                                    WITH DISTINCT b
+                                    MATCH (b)-[tt:TAGGED]->(t:Tag)
+                                    WITH DISTINCT t
+                                    MATCH (b:Book)-[:TAGGED]->(t)
+                                    WITH DISTINCT b
+                                    MATCH (u:User)-[r:RATED]->(b)
+                                    WITH b AS book, AVG(toInteger(r.score)) AS avgScore, COUNT(r) AS reviewCount
+                                    WHERE NOT (:User {_id:'${id}'})-[:RATED]->(book)
+                                    RETURN book, avgScore, reviewCount
+                                    ORDER BY avgScore DESC
     `);
 
-    const books = result.records.map(i=>i.get('b').properties);
+    const books = result.records.map(i=>i.get('book').properties);
     const avgScores = result.records.map(i=>i.get('avgScore'));
-    const rateCount = result.records.map(i=>i.get('rateCount'));
+    const reviewsCount = result.records.map(i=>i.get('reviewCount'));
 
     const resultData = [];
 
@@ -149,7 +151,7 @@ const findRecommendations = async (id) => {
         resultData.push({
             book: books[i],
             score: avgScores[i],
-            rateCount: rateCount[i]
+            reviewsCount: reviewsCount[i]
         });
     }
 

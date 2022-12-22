@@ -20,10 +20,14 @@ import ShowUsersReviews from "./Components/Reports/ShowUserReviews";
 import ShowAuthorBooks from "./Components/Reports/ShowAuthorBooks";
 import ShowBookTags from "./Components/Reports/ShowBookTags";
 
+import ShowUserRecommendations from "./Components/Reports/ShowUserRecommendations";
+
 function App() {
   return (
     <Layout>
       <Routes>
+        <Route path="/" element={<ShowUserRecommendations />} />
+
         <Route path="/forms" element={<FormsNavigation />} />
         <Route path="/reports" element={<ReportsNavigation />} />
 

@@ -8,4 +8,9 @@ data.post('/add', async (req, res) => {
     res.json(result);
 });
 
+data.delete('/delete', async (req, res) => {
+    const result = await dataModel.deleteData();
+    res.json(result);
+});
+
 export default data;
