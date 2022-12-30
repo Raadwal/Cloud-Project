@@ -6,7 +6,7 @@ import classes from "./Reports.module.css";
 
 function ShowUsersReport() {
   const [users, getUsers] = useState([]);
-  const url = "http://127.0.0.1:3000/user";
+  const url = "http://18.130.110.236/user";
 
   const getAllUsers = () => {
     axios.get(url).then((res) => {

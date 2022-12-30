@@ -6,7 +6,7 @@ import classes from "./Reports.module.css";
 
 function ShowBooksReport() {
   const [books, getBooks] = useState([]);
-  const url = "http://127.0.0.1:3000/book";
+  const url = "http://18.130.110.236/book";
 
   const getAllBooks = () => {
     axios.get(url).then((res) => {

@@ -6,7 +6,7 @@ import classes from "./AddForm.module.css";
 
 function AddAuthorBook() {
     const [response, setResponse] = useState("");
-    const url = "http://127.0.0.1:3000/author";
+    const url = "http://18.130.110.236/author";
   
     const authorIdInputRef = useRef();
     const bookIdInputRef = useRef();

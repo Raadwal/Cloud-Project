@@ -6,7 +6,7 @@ import classes from "./Reports.module.css";
 
 function ShowTagsReport() {
   const [tags, getTags] = useState([]);
-  const url = "http://127.0.0.1:3000/tag";
+  const url = "http://18.130.110.236/tag";
 
   const getAllTags = () => {
     axios.get(url).then((res) => {

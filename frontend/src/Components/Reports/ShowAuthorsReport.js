@@ -6,7 +6,7 @@ import classes from "./Reports.module.css";
 
 function ShowAuthorsReport() {
   const [authors, getAuthors] = useState([]);
-  const url = "http://127.0.0.1:3000/author";
+  const url = "http://18.130.110.236/author";
 
   const getAllAuthors = () => {
     axios.get(url).then((res) => {  

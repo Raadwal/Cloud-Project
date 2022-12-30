@@ -6,7 +6,7 @@ import classes from "./AddForm.module.css";
 
 function AddUserReview() {
     const [response, setResponse] = useState("");
-    const url = "http://127.0.0.1:3000/user";
+    const url = "http://18.130.110.236/user";
   
     const userIdInputRef = useRef();
     const bookIdInputRef = useRef();
