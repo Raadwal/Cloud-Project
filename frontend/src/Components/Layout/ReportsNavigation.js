@@ -11,7 +11,7 @@ function ReportsNavigation() {
         <Link to="/reports/show/tags">Show Tag</Link>
         <Link to="/reports/author/show/books">Show Authors Books</Link>
         <Link to="/reports/book/show/tags">Show Books Tags</Link>
-        <Link to="/reports/user/show/reviews">Add Users Reviews</Link>
+        <Link to="/reports/user/show/reviews">Show Users Reviews</Link>
     </nav>
   );
 }
